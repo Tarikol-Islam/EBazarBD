@@ -1,0 +1,17 @@
+{% extends 'Shop/basic.html' %}
+
+{% block title %} HEllo world{% endblock %}
+
+<!-- CARD SECTION --> 
+<div class = "container row ">
+    {% for product in products %}
+    <div class="card container" style="width: 12rem;">
+      <img src="/media/{{product.product_pic }}" style ="height:150px"class="card-img-top img-thumbnail" alt="...">
+      <div class="card-body">
+        <h6>{{product.product_name}}</h6>
+        <p class="card-text">{{product.product_brand}}</p>
+        <a href="#" class="btn btn-primary">Add to cart</a>
+      </div>
+    </div>
+  {% endfor %}
+</div> 

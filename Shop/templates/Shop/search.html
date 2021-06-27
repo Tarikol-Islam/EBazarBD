@@ -1,0 +1,64 @@
+{% extends 'Shop/basic.html' %}
+{% block css %}
+
+{% endblock %}
+{% block title%} EBazarBD {% endblock %}
+{% block body %}
+
+{% load static %}
+
+<div class="container">
+    <!--Slideshow starts here -->
+    {% for product, range, n in AllProds %}
+    <h5 class="my-4">Flash Sale On {{product.0.product_catg}} - Recommended Items</h5>
+    <div class="row my-5 ">
+        <div id="demo{{forloop.counter}}" class="col carousel slide my-3" data-ride="carousel">
+            <ul class="carousel-indicators alert-danger">
+                <li data-target="#demo{{forloop.counter}}" data-slide-to="0" class="active"></li>
+                {% for i in range %}
+                <li data-target="#demo{{forloop.parentloop.counter}}" data-slide-to="{{i}}"></li>
+                {% endfor %}
+            </ul>
+  
+  
+            <div class=" carousel-inner no-padding" data-bs-ride="carousel" id="carouselExampleControls">
+                <div class="carousel-item active d-flex justify-content-evenly " style="background-color: aqua;">
+                    {% for item in product %}
+                    <div class="card align-items-center" style="width: 12rem; Height: 19rem">
+                        <!--image div-->
+                        <div style="height: 200px;border: 5px outset red;"><img src='/media/{{item.product_pic}}'
+                                class="card-img-top" height="190px" alt="..."></div>
+                        <div class="card-body">
+                            <h6 class="card-title" id="namepr{{item.id}}">{{item.product_name}}</h6>
+                            <p class="card-text">{{item.product_brand}}</p>
+                            <p class="card-title">Price : ৳<span id="pricepr{{item.id}}">{{item.product_price}}</span>
+                            </p>
+                            <span id="divpr{{item.id}}" class="divpr">
+                                <button id="pr{{item.id}}" class="btn btn-primary cart">Add To Cart</button>
+                            </span>
+                            <a href="/Shop/{{item.id}}"><button id="qv{{item.id}}"
+                                    class="btn btn-primary cart">QuickView</button></a>
+                        </div>
+                    </div>
+                    {% if forloop.counter|divisibleby:4 and forloop.counter > 0 and not forloop.last %}
+                </div>
+                <div class="carousel-item">
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <!--left-rght-controller-->
+        <a class="carousel-control-prev btn btn-primary" data-bs-target="#carouselExampleControls" rule="button"
+            href="#demo{{forloop.parentloop.counter}}" data-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </a>
+        <a class="carousel-control-next btn btn-primary" data-bs-target="#carouselExampleControls" rule="button"
+            href="#demo{{forloop.parentloop.counter}}" data-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </a>
+        <!--left-rght-controller-part-end-->
+    </div>
+    {% endfor %}
+  </div>
+{% endblock %}

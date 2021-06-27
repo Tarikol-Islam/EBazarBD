@@ -1,0 +1,129 @@
+{% extends 'Shop/basic.html' %}
+{% block css %}
+.col-md-3
+{
+display: inline-block;
+margin-left:-9px;
+}
+
+.carousel-indicators .active {
+background-color: blue;
+}
+
+.col-md-3 img{
+
+width: 218px;
+max-height: 242px;
+margin-left: 1px;
+}
+
+body .carousel-indicator li{
+background-color: blue;
+}
+
+body .carousel-indicators{
+bottom: -60px;
+}
+
+body .carousel-control-prev-icon,
+body .carousel-control-next-icon{
+background-color: blue;
+}
+
+.carousel-control-prev,
+.carousel-control-next{
+top: auto;
+bottom: auto;
+}
+body .no-padding{
+padding-left: 0,
+padding-right: 0;
+}
+{% endblock %}
+
+{% block body %}
+{% load static %}
+<div class="container" style="background-color:rgb(161, 161, 112);">
+
+    <!--Slideshow starts here -->
+    {% for product, range, nSlides in allProds %}
+    <h5 class="my-4" style="color:aqua;text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;">Flash Sale On
+        {{product.0.product_catg}} - Recommended Items</h5>
+    <div id="demo{{forloop.counter}}" class="carousel slide my-3" data-ride="carousel">
+        <ul class="carousel-indicators">
+            <li data-target="#demo{{forloop.counter}}" data-slide-to="0" class="active"></li>
+
+            {% for i in range %}
+            <li data-target="#demo{{forloop.parentloop.counter}}" data-slide-to="{{i}}"></li>
+            {% endfor %}
+        </ul>
+
+
+        <div class="container carousel-inner no-padding">
+
+            <div class="carousel-item active">
+
+                {% for i in product%}
+                <div class="col-xs-3 col-sm-3 col-md-3 ">
+                    <div class="card mx-1"
+                        style="width: 228px; height:20rem;position: static;border: 3px solid #73AD21;">
+                        <img src='/media/{{i.product_pic}}' height="150px" width="20px" class="card-img-top"
+                            alt="...">
+                        <div class="card-body">
+                            <h6 class="card-title">{{i.product_name}}</h6>
+                            <p class="card-text">{{i.product_brand}}</p>
+                            <button id="ProdID{{i.id}}" class="btn btn-primary cart btn-sm">Add To Cart</button>
+                            <a href="/productdetails/{{i.id}}" type="button" class="btn btn-primary btn-sm">See Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                {% if forloop.counter|divisibleby:4 and forloop.counter > 0 and not forloop.last %}
+            </div>
+            <div class="carousel-item">
+                {% endif %}
+
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+    <!-- left and right controls for the slide -->
+    <a class="carousel-control-prev" href="#demo{{forloop.counter}}" data-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a class="carousel-control-next" href="#demo{{forloop.counter}}" data-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </a>
+    <br>
+    <br>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+    console.log('working');
+    if(localStorage.getItem('cart')==null){
+        var cart = {}
+    }
+    else{
+        cart=JSON.parse(localStorage.getItem('cart'))
+    }
+    $('.cart').click(function(){
+        console.log('clicked');
+        var idstr = this.id.toString();
+        if (cart[idstr] !=undefined){
+            cart[idstr]= cart[idstr]+1;
+        }
+        else{
+            cart[idstr] = 1;
+        }
+        localStorage.setItem('cart',JSON.stringify(cart));
+        console.log(cart)
+        document.getElementById("cart").innerHTML = Object.keys(cart).length;
+    })
+    $('#PopCart').popover();
+    document.getElementById("PopCart").setAttribute('data-content','<h6>you have 15 item from 4 different products.<br>Click to check out the products.</h6>');
+</script>
+{% endblock %}
