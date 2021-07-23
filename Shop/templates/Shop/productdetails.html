@@ -8,7 +8,7 @@
       <img src="/media/{{TheProduct.product_pic}}" height= "400px" width="100%" alt="">
     </div>
     <div class="row">
-      <button id="ProdID{{TheProduct.id}}" class="btn btn-primary cart">Add to Cart</button>
+      <button id="pr{{TheProduct.id}}" class="btn btn-primary cart">Add to Cart</button>
       <button class="btn btn-primary mx-3">Buy Now</button>
     </div>
   </div>
@@ -47,6 +47,6 @@
         document.getElementById("cart").innerHTML = Object.keys(cart).length;
     })
     $('#PopCart').popover();
-    document.getElementById("PopCart").setAttribute('data-content','<h6>you have 15 item from 4 different products.<br>Click to check out the products.</h6>');
+   // document.getElementById("PopCart").setAttribute('data-content','<h6>you have 15 item from 4 different products.<br>Click to check out the products.</h6>');
 </script>
 {% endblock %}

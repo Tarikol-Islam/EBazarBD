@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.fields import DateField
 
 # Create your models here.
 class product(models.Model):
@@ -15,15 +16,25 @@ class product(models.Model):
     def __str__(self):
         return self.product_name
 
-class order(models.Model):
-    order_id = models.AutoField
-    product_id = models.ForeignKey('product',on_delete = models.CASCADE)
-    payment_status = models.CharField(max_length = 100)
-    total_order_amt = models.FloatField()
-    order_status = models.CharField(max_length = 100)
-    delivery_address = models.CharField(max_length= 100)
-    order_place_date = models.TimeField(auto_now = True, auto_now_add = False)
+class Orders(models.Model):
+    order_id= models.AutoField(primary_key=True)
+    items_json= models.CharField(max_length=5000)
+    name=models.CharField(max_length=90)
+    email=models.CharField(max_length=111)
+    address=models.CharField(max_length=111)
+    city=models.CharField(max_length=111)
+    state=models.CharField(max_length=111)
+    zip_code=models.CharField(max_length=111)
+    phone = models.CharField(max_length=14, default="")
 
+class OrderUpdate(models.Model):
+    update_id = models.AutoField(primary_key = True)
+    order_id =models.IntegerField(default="")
+    update_desc = models.CharField(max_length= 5000)
+    timestamp = models.DateField(auto_now_add=True)
+    def __str__(self):
+        return self.update_desc[0:7]+"..."
+        
 class profile(models.Model):
     user_id = models.AutoField
     user_name = models.CharField(max_length = 100)
@@ -32,5 +43,4 @@ class profile(models.Model):
     user_phone = models.CharField(max_length = 14)
     user_balance = models.FloatField()
     profile_pic = models.ImageField(upload_to = 'media')
-    user_orders = models.ForeignKey('order',on_delete = models.CASCADE)
     profile_creation_date = models.TimeField(auto_now = True, auto_now_add = False)

@@ -16,8 +16,9 @@ urlpatterns = [
     path('',views.index,name='ShopHome'),
     path('search/',views.search,name='Search'),
     path("productdetails/<int:RequiredProductID>",views.productdetails,name='ProductDetails'),
-    path('orders/',views.orders,name='YourOrders'),
+    path('tracker/',views.tracker,name='OrderTracker'),
     path('yourprofile/',views.profile,name='YourProfile'),
     path('contact/',views.contact,name='ContactUs'),
     path('about/',views.about,name='AboutUs'),
+    path("checkout/",views.checkout, name="CheckOut"),
 ]
